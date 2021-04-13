@@ -4,6 +4,7 @@ import os
 import sys
 import feedparser
 from twython import Twython, TwythonError
+from config import *
 
 
 class Settings:
@@ -109,12 +110,17 @@ def read_rss_and_tweet(url: str):
     if feed:
         for item in feed["items"]:
             link = item["link"]
-            if is_in_logfile(link, Settings.posted_urls_output_file):
-                print("Already posted:", link)
-            else:
-                post_tweet(message=compose_message(item))
-                write_to_logfile(link, Settings.posted_urls_output_file)
-                print("Posted:", link)
+
+            # if is_in_logfile(link, Settings.posted_urls_output_file):
+            #     print("Already posted:", link)
+            # else:
+            #     post_tweet(message=compose_message(item))
+            #     write_to_logfile(link, Settings.posted_urls_output_file)
+            #     print("Posted:", link)
+
+            post_tweet(message=compose_message(item))
+            write_to_logfile(link, Settings.posted_urls_output_file)
+            print("Posted:", link)
     else:
         print("Nothing found in feed", url)
 

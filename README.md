@@ -1,5 +1,7 @@
 # Twitterbot
 
+Original Project from: https://github.com/peterdalle/twitterbot
+
 Twitterbot is a simple Python application for:
 
 * reading and parsing a RSS feed and posting its title and links to a Twitter account.
