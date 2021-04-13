@@ -12,7 +12,7 @@ class Settings:
     Enter the RSS feed you want to tweet, or keywords you want to retweet.
     """
     # RSS feed to read and post tweets from.
-    feed_url = "http://example.net/feed/"
+    feed_url = "https://www.monroecounty.gov/911/rss.php"
 
     # Log file to save all tweeted RSS links (one URL per line).
     posted_urls_output_file = "posted-urls.log"
@@ -33,10 +33,10 @@ class TwitterAuth:
     Create a Twitter app at https://apps.twitter.com/ and generate
     consumer key, consumer secret etc. and insert them here.
     """
-    consumer_key = "XXX"
-    consumer_secret = "XXX"
-    access_token = "XXX"
-    access_token_secret = "XXX"
+    consumer_key = API_KEY
+    consumer_secret = API_SECRET_KEY
+    access_token = ACCESS_TOKEN
+    access_token_secret = ACCESS_TOKEN_SECRET
 
 
 def compose_message(item: feedparser.FeedParserDict) -> str:
@@ -54,7 +54,8 @@ def compose_message(item: feedparser.FeedParserDict) -> str:
         Returns a message suited for a Twitter status update.
     """
     title, link, _ = item["title"], item["link"], item["description"]
-    message = shorten_text(title, maxlength=250) + " " + link
+    # message = shorten_text(title, maxlength=250) + " " + link
+    message = shorten_text(title, maxlength=250)    # without link
     return message
 
 
@@ -104,6 +105,7 @@ def read_rss_and_tweet(url: str):
         URL to RSS feed.
     """
     feed = feedparser.parse(url)
+    # print("feedparser output is: " + str(feed))
     if feed:
         for item in feed["items"]:
             link = item["link"]
@@ -148,6 +150,7 @@ def search_and_retweet(query: str, count=10):
                           TwitterAuth.consumer_secret,
                           TwitterAuth.access_token,
                           TwitterAuth.access_token_secret)
+        twitter.verify_credentials()
         search_results = twitter.search(q=query, count=count)
     except TwythonError as e:
         print(e)
