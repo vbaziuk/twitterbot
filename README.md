@@ -52,9 +52,3 @@ crontab examples:
 # Rewteet keywords/hashtags every 15 minutes.
 */15 * * * * python twitterbot.py rt
 ```
-
-Use the [cron schedule expression editor](https://crontab.guru/) to easily create crons.
-
-## Questions
-
-See [Questions and answers](https://github.com/peterdalle/twitterbot/wiki/Questions-and-answers) in the wiki.
